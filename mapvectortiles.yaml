@@ -1,0 +1,21 @@
+version: '3.4'
+
+networks:
+  traefik:
+    external: true
+ 
+services:
+  api:
+    image: modalnodes/images:mn-mvt_0.0.6
+    networks:
+      - traefik
+      - default
+    deploy:
+      labels:
+        - "traefik.docker.network=traefik"
+        - "traefik.frontend.rule=Host:vectortiles.modal-nodes.com,vectortiles.openhistorymap.org"
+        - "traefik.port=8050"
+  redis:
+    image: redis:latest
+    networks:
+      - default
